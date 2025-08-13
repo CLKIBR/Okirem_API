@@ -1,8 +1,10 @@
 ﻿using Application.Features.Auth.Commands.EnableEmailAuthenticator;
 using Application.Features.Auth.Commands.EnableOtpAuthenticator;
+using Application.Features.Auth.Commands.ForgotPassword;
 using Application.Features.Auth.Commands.Login;
 using Application.Features.Auth.Commands.RefreshToken;
 using Application.Features.Auth.Commands.Register;
+using Application.Features.Auth.Commands.ResetPassword;
 using Application.Features.Auth.Commands.RevokeToken;
 using Application.Features.Auth.Commands.VerifyEmailAuthenticator;
 using Application.Features.Auth.Commands.VerifyOtpAuthenticator;
@@ -106,6 +108,20 @@ public class AuthController : BaseController
             new() { UserId = getUserIdFromRequest(), ActivationCode = authenticatorCode };
 
         await Mediator.Send(verifyEmailAuthenticatorCommand);
+        return Ok();
+    }
+
+    [HttpPost("ForgotPassword")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
+    {
+        await Mediator.Send(new ForgotPasswordCommand { ForgotPasswordDto = dto });
+        return Ok();
+    }
+
+    [HttpPost("ResetPassword")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, [FromQuery] Guid userId)
+    {
+        await Mediator.Send(new ResetPasswordCommand(userId, dto));
         return Ok();
     }
 

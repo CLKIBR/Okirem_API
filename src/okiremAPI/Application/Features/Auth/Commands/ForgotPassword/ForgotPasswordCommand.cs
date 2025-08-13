@@ -54,6 +54,17 @@ public class ForgotPasswordCommand : IRequest
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user); //Böyle bir user var mı kontrol ediyor
 
             var emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(e => e.UserId == user.Id);
+            if (emailAuthenticator == null)
+            {
+                emailAuthenticator = new EmailAuthenticator
+                {
+                    User = user,
+                    UserId = user.Id,
+                    ResetPasswordToken = false,
+                    ResetPasswordTokenExpiry = null
+                };
+                await _emailAuthenticatorRepository.AddAsync(emailAuthenticator);
+            }
             await _authBusinessRules.PasswordResetRequestBeExists(emailAuthenticator);
 
             //Link üzerine eklenecek AccessTokeni oluşturur, AccessToken JTW türünde olduğu için üzerinde Expiration süresi taşır
@@ -81,7 +92,7 @@ public class ForgotPasswordCommand : IRequest
                 new Mail
                 {
                     ToList = toEmailList,
-                    Subject = "Şifrenizi mi unuttunuz? - CodeStorm",
+                    Subject = "Şifrenizi mi unuttunuz? - Okirem",
                     TextBody =
                         $"Link üzerinden şifrenizi yenileyebilirsiniz, bu uzantıyı kimseyle palaşmayın. Buraya tıklayın : {ResetPasswordLink}",
                     HtmlBody = htmlContent

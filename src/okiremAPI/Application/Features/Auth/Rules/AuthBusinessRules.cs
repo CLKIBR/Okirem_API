@@ -32,8 +32,10 @@ public class AuthBusinessRules : BaseBusinessRules
             await throwBusinessException(AuthMessages.EmailAuthenticatorDontExists);
     }
 
-    public async Task PasswordResetRequestBeExists(EmailAuthenticator emailAuthenticator)
+    public async Task PasswordResetRequestBeExists(EmailAuthenticator? emailAuthenticator)
     {
+        if (emailAuthenticator is null)
+            await throwBusinessException(AuthMessages.EmailAuthenticatorDontExists);
         if (emailAuthenticator.ResetPasswordToken is false && emailAuthenticator.ResetPasswordTokenExpiry < DateTime.UtcNow)
         {
             await throwBusinessException(AuthMessages.PasswordResetRequestExpired);
