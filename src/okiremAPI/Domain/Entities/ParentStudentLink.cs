@@ -14,4 +14,8 @@ public class ParentStudentLink : Entity<Guid>
     public RelationshipType Relationship { get; set; } // Yakınlık ilişkisi
     public bool IsPrimary { get; set; } // Birincil veli mi
     public Guid? TenantId { get; set; } // Kiracı ID
+
+    // Navigation
+    public virtual ParentProfile ParentProfile { get; set; } = default!; // Veli profili
+    public virtual StudentProfile StudentProfile { get; set; } = default!; // Öğrenci profili
 }

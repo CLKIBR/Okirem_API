@@ -15,17 +15,21 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<CreateTeacherProfileCommand, TeacherProfile>();
-        CreateMap<TeacherProfile, CreatedTeacherProfileResponse>();
+        CreateMap<TeacherProfile, CreatedTeacherProfileResponse>()
+            .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => (int)src.Gender));
 
         CreateMap<UpdateTeacherProfileCommand, TeacherProfile>();
-        CreateMap<TeacherProfile, UpdatedTeacherProfileResponse>();
+        CreateMap<TeacherProfile, UpdatedTeacherProfileResponse>()
+            .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => (int)src.Gender));
 
         CreateMap<DeleteTeacherProfileCommand, TeacherProfile>();
         CreateMap<TeacherProfile, DeletedTeacherProfileResponse>();
 
-        CreateMap<TeacherProfile, GetByIdTeacherProfileResponse>();
+        CreateMap<TeacherProfile, GetByIdTeacherProfileResponse>()
+            .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => (int)src.Gender));
 
-        CreateMap<TeacherProfile, GetListTeacherProfileListItemDto>();
+        CreateMap<TeacherProfile, GetListTeacherProfileListItemDto>()
+            .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => (int)src.Gender));
         CreateMap<IPaginate<TeacherProfile>, GetListResponse<GetListTeacherProfileListItemDto>>();
     }
 }

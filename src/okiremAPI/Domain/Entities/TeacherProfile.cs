@@ -35,5 +35,11 @@ public class TeacherProfile : Entity<Guid>
     public string? Notes { get; set; } // Notlar
     public string? TagsJson { get; set; } // Etiketler JSON
     public string? MetadataJson { get; set; } // Ek veriler JSON
+
+    // Navigation
+    public virtual User User { get; set; } = default!; // İlgili kullanıcı
+    public virtual School? School { get; set; } // İlgili okul
+    public virtual ICollection<TeacherStudentLink> StudentLinks { get; set; } = new List<TeacherStudentLink>(); // Öğrenci bağlantıları
+    public virtual ICollection<TeacherParentLink> ParentLinks { get; set; } = new List<TeacherParentLink>(); // Veli bağlantıları
 }
 

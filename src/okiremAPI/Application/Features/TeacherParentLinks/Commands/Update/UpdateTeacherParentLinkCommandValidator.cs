@@ -9,7 +9,7 @@ public class UpdateTeacherParentLinkCommandValidator : AbstractValidator<UpdateT
         RuleFor(c => c.Id).NotEmpty();
         RuleFor(c => c.TeacherProfileId).NotEmpty();
         RuleFor(c => c.ParentProfileId).NotEmpty();
-        RuleFor(c => c.LinkRole).NotEmpty();
-        RuleFor(c => c.IsPrimary).NotEmpty();
+        RuleFor(c => c.LinkRole).IsInEnum();
+        RuleFor(c => c.IsPrimary).NotNull();
     }
 }

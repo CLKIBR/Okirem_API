@@ -33,5 +33,10 @@ public class ParentProfile : Entity<Guid>
     public string? Notes { get; set; } // Notlar
     public string? TagsJson { get; set; } // Etiketler JSON
     public string? MetadataJson { get; set; } // Ek veriler JSON
+
+    // Navigation
+    public virtual User User { get; set; } = default!; // İlgili kullanıcı
+    public virtual ICollection<ParentStudentLink> StudentLinks { get; set; } = new List<ParentStudentLink>(); // Öğrenci bağlantıları
+    public virtual ICollection<TeacherParentLink> TeacherLinks { get; set; } = new List<TeacherParentLink>(); // Öğretmen bağlantıları
 }
 

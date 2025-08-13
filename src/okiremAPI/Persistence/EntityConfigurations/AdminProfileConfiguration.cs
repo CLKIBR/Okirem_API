@@ -12,16 +12,16 @@ public class AdminProfileConfiguration : IEntityTypeConfiguration<AdminProfile>
 
         builder.Property(ap => ap.Id).HasColumnName("Id").IsRequired();
         builder.Property(ap => ap.UserId).HasColumnName("UserId").IsRequired();
-        builder.Property(ap => ap.FirstName).HasColumnName("FirstName").IsRequired();
-        builder.Property(ap => ap.LastName).HasColumnName("LastName").IsRequired();
+        builder.Property(ap => ap.FirstName).HasColumnName("FirstName").IsRequired().HasMaxLength(100);
+        builder.Property(ap => ap.LastName).HasColumnName("LastName").IsRequired().HasMaxLength(100);
         builder.Property(ap => ap.ProfileImageUrl).HasColumnName("ProfileImageUrl");
-        builder.Property(ap => ap.Email).HasColumnName("Email");
-        builder.Property(ap => ap.AlternateEmail).HasColumnName("AlternateEmail");
+        builder.Property(ap => ap.Email).HasColumnName("Email").HasMaxLength(256);
+        builder.Property(ap => ap.AlternateEmail).HasColumnName("AlternateEmail").HasMaxLength(256);
         builder.Property(ap => ap.PhoneNumber).HasColumnName("PhoneNumber");
         builder.Property(ap => ap.AlternatePhoneNumber).HasColumnName("AlternatePhoneNumber");
         builder.Property(ap => ap.Locale).HasColumnName("Locale");
         builder.Property(ap => ap.IsActive).HasColumnName("IsActive").IsRequired();
-        builder.Property(ap => ap.Gender).HasColumnName("Gender").IsRequired();
+        builder.Property(ap => ap.Gender).HasColumnName("Gender").IsRequired().HasConversion<int>();
         builder.Property(ap => ap.BirthDate).HasColumnName("BirthDate");
         builder.Property(ap => ap.Country).HasColumnName("Country");
         builder.Property(ap => ap.City).HasColumnName("City");
@@ -38,6 +38,15 @@ public class AdminProfileConfiguration : IEntityTypeConfiguration<AdminProfile>
         builder.Property(ap => ap.CreatedDate).HasColumnName("CreatedDate").IsRequired();
         builder.Property(ap => ap.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(ap => ap.DeletedDate).HasColumnName("DeletedDate");
+
+        // Indexes
+        builder.HasIndex(ap => ap.Email).IsUnique(false);
+
+        // Navigation and foreign key relationships
+        builder.HasOne(ap => ap.User)
+            .WithMany()
+            .HasForeignKey(ap => ap.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasQueryFilter(ap => !ap.DeletedDate.HasValue);
     }

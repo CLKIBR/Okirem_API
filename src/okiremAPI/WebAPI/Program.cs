@@ -35,6 +35,9 @@ builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices();
 builder.Services.AddHttpContextAccessor();
 
+// SchoolImport:Enabled true ise import iþlemi bir kez çalýþacak þekilde kod eklendi. JsonPath appsettings'ten okunuyor. DI kaydý da eklendi.
+builder.Services.AddScoped<Infrastructure.Services.SchoolImportService>();
+
 const string tokenOptionsConfigurationSection = "TokenOptions";
 TokenOptions tokenOptions =
     builder.Configuration.GetSection(tokenOptionsConfigurationSection).Get<TokenOptions>()
@@ -112,5 +115,15 @@ WebApiConfiguration webApiConfiguration =
 app.UseCors(opt => opt.WithOrigins(webApiConfiguration.AllowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
 app.UseResponseLocalization();
+
+// SchoolImport iþlemi için koþullu çalýþtýrma
+if (app.Configuration.GetValue<bool>("SchoolImport:Enabled"))
+{
+    using var scope = app.Services.CreateScope();
+    var service = scope.ServiceProvider.GetRequiredService<Infrastructure.Services.SchoolImportService>();
+    var jsonPath = app.Configuration.GetValue<string>("SchoolImport:JsonPath");
+    if (!string.IsNullOrWhiteSpace(jsonPath))
+        await service.ImportAsync(jsonPath);
+}
 
 app.Run();

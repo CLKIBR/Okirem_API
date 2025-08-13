@@ -22,5 +22,10 @@ public class School : Entity<Guid>
     public string? WebsiteUrl { get; set; } // Web sitesi URL
     public string? Notes { get; set; } // Notlar
     public Guid? TenantId { get; set; } // Kiracı ID
+
+    // Navigation
+    public virtual ICollection<Classroom> Classrooms { get; set; } = new List<Classroom>(); // Sınıflar
+    public virtual ICollection<StudentProfile> StudentProfiles { get; set; } = new List<StudentProfile>(); // Öğrenciler
+    public virtual ICollection<TeacherProfile> Teachers { get; set; } = new List<TeacherProfile>(); // Öğretmenler
 }
 

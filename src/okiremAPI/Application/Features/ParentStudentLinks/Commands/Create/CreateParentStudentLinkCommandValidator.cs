@@ -8,7 +8,7 @@ public class CreateParentStudentLinkCommandValidator : AbstractValidator<CreateP
     {
         RuleFor(c => c.ParentProfileId).NotEmpty();
         RuleFor(c => c.StudentProfileId).NotEmpty();
-        RuleFor(c => c.Relationship).NotEmpty();
-        RuleFor(c => c.IsPrimary).NotEmpty();
+        RuleFor(c => c.Relationship).IsInEnum();
+        RuleFor(c => c.IsPrimary).NotNull();
     }
 }

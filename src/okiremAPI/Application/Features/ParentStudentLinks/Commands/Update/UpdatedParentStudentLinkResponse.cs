@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using NArchitecture.Core.Application.Responses;
 using Domain.Enums;
 
@@ -6,9 +7,13 @@ namespace Application.Features.ParentStudentLinks.Commands.Update;
 public class UpdatedParentStudentLinkResponse : IResponse
 {
     public Guid Id { get; set; }
+    [Required]
     public Guid ParentProfileId { get; set; }
+    [Required]
     public Guid StudentProfileId { get; set; }
-    public RelationshipType Relationship { get; set; }
+    [Required]
+    public int Relationship { get; set; } // Enum int olarak maplenecek
+    [Required]
     public bool IsPrimary { get; set; }
     public Guid? TenantId { get; set; }
 }

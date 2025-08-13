@@ -13,4 +13,9 @@ public class Classroom : Entity<Guid>
     public string? Grade { get; set; } // Sınıf seviyesi
     public string? Notes { get; set; } // Notlar
     public Guid? TenantId { get; set; } // Kiracı ID
+
+    // Navigation
+    public virtual School School { get; set; } = default!; // Bağlı olduğu okul
+    public virtual ICollection<StudentProfile> StudentProfiles { get; set; } = new List<StudentProfile>(); // Öğrenciler
+    public virtual ICollection<TeacherStudentLink> TeacherLinks { get; set; } = new List<TeacherStudentLink>(); // Öğretmen-öğrenci bağlantıları
 }

@@ -17,4 +17,9 @@ public class TeacherParentLink : Entity<Guid>
     public bool IsPrimary { get; set; } // Birincil bağlantı mı
     public string? Notes { get; set; } // Notlar
     public Guid? TenantId { get; set; } // Kiracı ID
+
+    // Navigation
+    public virtual TeacherProfile TeacherProfile { get; set; } = default!; // Öğretmen profili
+    public virtual ParentProfile ParentProfile { get; set; } = default!; // Veli profili
+    public virtual StudentProfile? StudentProfile { get; set; } // İlgili öğrenci (opsiyonel)
 }

@@ -33,5 +33,8 @@ public class AdminProfile : Entity<Guid>
     public string? Notes { get; set; } // Notlar
     public string? TagsJson { get; set; } // Etiketler JSON
     public string? MetadataJson { get; set; } // Ek veriler JSON
+
+    // Navigation
+    public virtual User User { get; set; } = default!; // İlgili kullanıcı
 }
 
