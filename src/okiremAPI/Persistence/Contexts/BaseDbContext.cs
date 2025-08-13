@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +14,15 @@ public class BaseDbContext : DbContext
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+    public DbSet<AdminProfile> AdminProfiles { get; set; }
+    public DbSet<Classroom> Classrooms { get; set; }
+    public DbSet<ParentProfile> ParentProfiles { get; set; }
+    public DbSet<ParentStudentLink> ParentStudentLinks { get; set; }
+    public DbSet<School> Schools { get; set; }
+    public DbSet<StudentProfile> StudentProfiles { get; set; }
+    public DbSet<TeacherParentLink> TeacherParentLinks { get; set; }
+    public DbSet<TeacherProfile> TeacherProfiles { get; set; }
+    public DbSet<TeacherStudentLink> TeacherStudentLinks { get; set; }
 
     public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration)
         : base(dbContextOptions)

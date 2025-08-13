@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
@@ -20,6 +20,15 @@ using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
 using NArchitecture.Core.Security.DependencyInjection;
 using NArchitecture.Core.Security.JWT;
+using Application.Services.AdminProfiles;
+using Application.Services.Classrooms;
+using Application.Services.ParentProfiles;
+using Application.Services.ParentStudentLinks;
+using Application.Services.Schools;
+using Application.Services.StudentProfiles;
+using Application.Services.TeacherParentLinks;
+using Application.Services.TeacherProfiles;
+using Application.Services.TeacherStudentLinks;
 
 namespace Application;
 
@@ -61,6 +70,15 @@ public static class ApplicationServiceRegistration
 
         services.AddSecurityServices<Guid, int, Guid>(tokenOptions);
 
+        services.AddScoped<IAdminProfileService, AdminProfileManager>();
+        services.AddScoped<IClassroomService, ClassroomManager>();
+        services.AddScoped<IParentProfileService, ParentProfileManager>();
+        services.AddScoped<IParentStudentLinkService, ParentStudentLinkManager>();
+        services.AddScoped<ISchoolService, SchoolManager>();
+        services.AddScoped<IStudentProfileService, StudentProfileManager>();
+        services.AddScoped<ITeacherParentLinkService, TeacherParentLinkManager>();
+        services.AddScoped<ITeacherProfileService, TeacherProfileManager>();
+        services.AddScoped<ITeacherStudentLinkService, TeacherStudentLinkManager>();
         return services;
     }
 
